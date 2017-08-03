@@ -1,0 +1,23 @@
+﻿
+@{
+    ViewBag.Title = "Index";
+    Layout = null;
+    @Scripts.Render("~/bundles/jquery")
+}
+
+<script type="text/javascript">
+    $(document).ready(function () {
+        $("#file").bind("change", function () {
+            $("#img1").attr("src", "file://" + $("#file").val());
+        });
+    });
+</script>
+
+@using (Html.BeginForm("Indexs", "AddGoods", FormMethod.Post, new { id = "form1", enctype = "multipart/form-data" }))
+{
+    <form id="form1">
+        <img src="" alt="暂无图片" id="img1" style="width:150px;height:150px;" />
+        <input type='file' name='file' id='file' />
+        <input type="submit" value="上传" id="btnSubnit" />
+    </form>
+}

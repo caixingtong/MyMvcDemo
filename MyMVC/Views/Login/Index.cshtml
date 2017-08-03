@@ -1,0 +1,154 @@
+﻿
+@{
+    ViewBag.Title = "欢迎登入";
+    Layout = null;  //去除模板页
+    @Scripts.Render("~/bundles/jquery")
+}
+
+<style>
+    * {
+        margin: 0px;
+        font: 100% Helvetica, Tahoma, Arial, "Microsoft YaHei", 微软雅黑, SimSun, 宋体, Heiti, 黑体, sans-serif;
+    }
+
+    a {
+    text-decoration:none;
+    }
+    .user_img {
+        position: relative;
+        margin-top: -70px;
+        width: 100%;
+        overflow: hidden;
+        text-align: center;
+    }
+
+        .user_img img {
+            border-radius: 50%;
+        }
+
+    .login1 {
+        margin-top: 10px;
+        width: 80%;
+        padding: 4%;
+        border-radius: 0.5rem;
+        border: 1px solid #333333;
+        margin: 3rem auto 0;
+    }
+
+    .import {
+        border-bottom: 1px solid #d2d2d2;
+        font-size: 0.7rem;
+        line-height: 0.7rem;
+        padding: 3% 0;
+    }
+
+    .user_ico {
+        width: 3%;
+        height: 3%;
+        display: inline-block;
+        background: url("../../Images/ICO/login02.png");
+        background-size: 100%;
+        background-repeat: no-repeat;
+        margin-left: 10px;
+    }
+
+
+
+    .sjh_ico {
+        width: 3%;
+        height: 3%;
+        display: inline-block;
+        background: url("../../Images/ICO/login09.png");
+        background-size: 100%;
+        background-repeat: no-repeat;
+        margin-left: 10px;
+    }
+
+    .pass_ico {
+        width: 3%;
+        height: 3%;
+        display: inline-block;
+        background: url("../../Images/ICO/login03.png");
+        background-size: 100%;
+        background-repeat: no-repeat;
+        margin-left: 10px;
+    }
+
+
+
+    .login1 .import input {
+        padding-left: 4%;
+        width: 89%;
+        height: 60px;
+        font-size: 26px;
+        border-top: none;
+        border-left: none;
+        border-right: none;
+    }
+
+    .login1 .et_button {
+        background-color: transparent;
+        text-align: center;
+        display: inline-block;
+        width: 100%;
+        color: #333;
+        font-size: 30px;
+        font-weight: bold;
+        color:black;
+        padding-top: 4%;
+        cursor: pointer;
+        border: none;
+    }
+
+    .a_Login {
+        float: right;
+        font-size: 20px;
+        font-weight: bold;
+        margin-top: 20px;
+        margin-right: 50px;
+    }
+
+    .register_an {
+        width: 88%;
+        height:4%;
+        border: 1px solid #333;
+        text-align: center;
+        display: block;
+        margin: 0 auto 6%;
+        border-radius: 0.25rem;
+        font-size: 30px;
+        font-weight:bold;
+        color:black;
+        line-height: 210%;
+        margin-top:80px;
+    }
+</style>
+
+
+
+@using (Html.BeginForm("Login", "Login", FormMethod.Post))
+{
+    <div><img src="~/Images/logoyjy2.png" style="width:100%;height:30%;margin:0 auto" /></div>
+
+    <div class="user_img" style="display:none">
+        <img src="~/Images/login01.jpg">
+    </div>
+    <div class="login1"  style="margin-top:10%">
+        <div class="import">
+            <i class="sjh_ico"></i>
+            <input class="text01 ipt_user" id="txtPhone" name="Phone" maxlength="20" type="text" placeholder="手机号">
+            <div class="clear"></div>
+        </div>
+        <div class="import">
+            <i class="pass_ico"></i>
+            <input type="password" id="txtPwd1" name="Pwd1" class="ipt_passwd" maxlength="20" placeholder="密码">
+            <div class="clear"></div>
+        </div>
+        <input class="et_button btn_reg" type="submit" id="txtBtnSubmit" value="登   入">
+    </div>
+    <a class="a_Login">忘记密码？</a>
+    <a class="register_an" href="/First/Index">注&ensp;&ensp;册</a>
+}
+
+
+

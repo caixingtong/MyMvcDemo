@@ -1,0 +1,186 @@
+﻿
+@{
+    ViewBag.Title = "欢迎注册";
+    Layout = null;  //去除模板页
+    @Scripts.Render("~/bundles/jquery")
+}
+
+<style>
+    * {
+        margin: 0px;
+        font: 100% Helvetica, Tahoma, Arial, "Microsoft YaHei", 微软雅黑, SimSun, 宋体, Heiti, 黑体, sans-serif;
+    }
+
+    .user_img {
+        position: relative;
+        margin-top: -70px;
+        width: 100%;
+        overflow: hidden;
+        text-align: center;
+    }
+
+        .user_img img {
+            border-radius: 50%;
+        }
+
+    .login1 {
+        margin-top: 10px;
+        width: 80%;
+        padding: 4%;
+        border-radius: 0.5rem;
+        border: 1px solid #333333;
+        margin: 3rem auto 0;
+    }
+
+    .import {
+        border-bottom: 1px solid #d2d2d2;
+        font-size: 0.7rem;
+        line-height: 0.7rem;
+        padding: 3% 0;
+    }
+
+    .user_ico {
+        width: 3%;
+        height: 3%;
+        display: inline-block;
+        background: url("../../Images/ICO/login02.png");
+        background-size: 100%;
+        background-repeat: no-repeat;
+        margin-left: 10px;
+    }
+
+    .sjh_ico {
+        width: 3%;
+        height: 3%;
+        display: inline-block;
+        background: url("../../Images/ICO/login09.png");
+        background-size: 100%;
+        background-repeat: no-repeat;
+        margin-left: 10px;
+    }
+
+    .pass_ico {
+        width: 3%;
+        height: 3%;
+        display: inline-block;
+        background: url("../../Images/ICO/login03.png");
+        background-size: 100%;
+        background-repeat: no-repeat;
+        margin-left: 10px;
+    }
+
+
+
+    .login1 .import input {
+        padding-left: 4%;
+        width: 89%;
+        height: 60px;
+        font-size: 26px;
+        border-top: none;
+        border-left: none;
+        border-right: none;
+    }
+
+    .login1 .et_button {
+        background-color: transparent;
+        text-align: center;
+        display: inline-block;
+        width: 100%;
+        color: #333;
+        font-size: 30px;
+        padding-top: 4%;
+        cursor: pointer;
+        border: none;
+    }
+
+    .a_Login {
+        float: right;
+        font-size: 20px;
+        font-weight: bold;
+        margin-top: 20px;
+        margin-right: 50px;
+    }
+</style>
+<script type="text/javascript">
+    function Check() {
+        if (document.getElementById("txtName").value == "") {
+            alert("请填写您的姓名！");
+            return false;
+        }
+        if (document.getElementById("txtPhone").value == "") {
+            alert("请填写您的手机号码！");
+            return false;
+        }
+
+
+        if (document.getElementById("txtPwd1").value == "" || document.getElementById("txtPwd2").value == "") {
+            alert("请填写您的密码！");
+            return false;
+        }
+        if (document.getElementById("txtPwd1").value != document.getElementById("txtPwd2").value) {
+            alert("两次密码输入不一致！");
+            return false;
+        }
+        var phone = document.getElementById('txtPhone').value;
+        if (!(/^1[34578]\d{9}$/.test(phone))) {
+            alert("手机号码有误，请重填！");
+            return false;
+        }
+        if (document.getElementById("txtPwd1").value.length < 6 || document.getElementById("txtPwd1").value.length > 16) {
+            alert("设置登录密码（6-16位数字、字母或符号组成）!");
+            return false;
+        }
+    }
+
+    function GetImage() {
+        $("#imageYz").attr("src", $("#imageYz").attr("src") + 1);  //id=2
+    }
+
+</script>
+
+@using (Html.BeginForm("Regist", "First", FormMethod.Post))
+{
+    <div><img src="~/Images/logoyjy2.png" style="width:100%;height:30%;" /></div>
+    <div class="user_img" style="display:none">
+        <img src="~/Images/login01.jpg">
+    </div>
+    <div class="login1" style="margin-top:10%">
+        <div class="import">
+            <i class="user_ico"></i>
+            <input type="text" id="txtName" name="UserName" class="ipt_name" maxlength="10" placeholder="您的姓名（建议填写真实姓名）">
+            <div class="clear"></div>
+        </div>
+        <div class="import">
+            <i class="sjh_ico"></i>
+            <input class="text01 ipt_user" id="txtPhone" name="Phone" maxlength="20" type="text" placeholder="输入手机号">
+            <div class="clear"></div>
+        </div>
+        <div class="import">
+            <i class="sjh_ico"></i>
+            <input class="text01 ipt_user" id="txtEmail" name="Email" maxlength="20" type="text" placeholder="输入邮箱(用于下单)">
+            <div class="clear"></div>
+        </div>
+        <div class="import">
+            <i class="pass_ico"></i>
+            <input type="password" id="txtPwd1" name="Pwd1" class="ipt_passwd" maxlength="20" placeholder="设置登录密码（6-16位数字、字母或符号组成）">
+            <div class="clear"></div>
+        </div>
+        <div class="import">
+            <i class="pass_ico"></i>
+            <input type="password" id="txtPwd2" name="Pwd2" class="ipt_confirmpwd" maxlength="20" placeholder="请确认登录密码">
+            <div class="clear"></div>
+        </div>
+        <div class="import">
+            <i class="pass_ico"></i>
+            <input type="text" id="txtYz" name="Yz" style="width:60%" class="ipt_confirmpwd" maxlength="6" placeholder="请输入验证码">
+            <div class="clear" style="float:right;width:30%;height:4%">
+                <a><img id="imageYz" src="/First/ShowValidateCode/?id=1" onclick="return GetImage()" style="width:100%;height:100%" /></a>
+            </div>
+        </div>
+        <input class="et_button btn_reg" type="submit" id="txtBtnSubmit" value="提交注册" >
+    </div>
+    <a class="a_Login" href="/Login/Index">已有账号，直接登入</a>
+}
+
+
+

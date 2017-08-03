@@ -1,0 +1,273 @@
+﻿
+@{
+    ViewBag.Title = "ShowGoods";
+    Layout = null;
+    @Scripts.Render("~/bundles/jquery")
+}
+
+<style>
+    * {
+        margin: 0px;
+        padding: 0px;
+        color: #333;
+        font: normal 100% Helvetica,Tahoma,Arial,"Microsoft YaHei","微软雅黑",SimSun,"宋体",Heiti,"黑体",sans-serif;
+        font-size: 30px;
+    }
+
+    ul li {
+        list-style-type: none;
+        float: left;
+        width: 25%;
+        text-align: center;
+        margin-top: 5px;
+        height: 20%;
+        line-height: 100px;
+        height: 100px;
+    }
+
+    .Image01 {
+        width: 40px;
+        height: 40px;
+        margin-bottom: -10px;
+    }
+
+    .screen li a > em {
+        display: inline-block;
+        border-color: #000000 #FFFFFF #FFFFFF;
+        border-style: solid;
+        border-width: 5px 5px 0;
+        height: 3px;
+        width: 3px;
+        padding: 0;
+        margin-left: 5px;
+        position: relative;
+        top: -3px;
+    }
+
+    .screen {
+        border-top: 1px solid #d2d2d2;
+        background-color: #FFF;
+        position: relative;
+    }
+
+        .screen li > ul {
+            position: absolute;
+            top: 2.2rem;
+            left: 0;
+            width: 88%;
+            padding: 0 6% 0%;
+            background-color: #fff;
+            z-index: 99;
+            display: none;
+            max-height: 22rem;
+            overflow: scroll;
+            margin-top: 28px;
+        }
+
+        .screen li > ul {
+            width: 80%;
+            overflow-x: hidden;
+            overflow-y: scroll;
+        }
+
+            .screen li > ul li {
+                float: none;
+                width: 100%;
+                height: 50px;
+                line-height: 50px;
+                border-bottom: 0.3px solid #d3cfcf;
+            }
+
+                .screen li > ul li a {
+                    text-align: left;
+                    width: 100%;
+                    display: block;
+                    color: #808080;
+                }
+
+    .searchPartialList {
+        width: 100%;
+        border: 1px solid #000000;
+    }
+
+    .div-topimg {
+     background-image:url("../../Images/logo.jpg");
+     width:100%;
+     height:400px;
+     background-size:cover;
+    }
+    .u1 li {
+        height:100px;
+    }
+</style>
+
+<script type="text/javascript">
+    $(function () {
+        $("li a").click(function () {
+            if ($(this).next().is(":hidden")) {
+                $(".u1").hide();
+                $(this).next().show();
+            }
+            else {
+                $(this).next().hide();
+            }
+        });
+
+        $(function () {
+
+            $.ajax({
+                type: 'POST',
+                url: '/Show/Index',
+                data: {},
+                dataType: 'text',
+                success: function (data) {
+                    $('#searchPartialList').html(data);
+                }, error: function (XMLHttpRequest, textStatus, errorThrown) {
+                    //  alert(errorThrown);
+                }
+            })
+            $(".u1 li>a").click(function () {
+                var value = $(this).text();
+                $(this).parent().parent().hide();
+                if (value != "全部") {
+                    $(this).parent().parent().parent().find("span").text(value);
+                }
+                else {
+                    var ivalue = $(this).parent().parent().parent().find("span").attr("id");
+                    if (ivalue == "spCz")
+                    {
+                        $("#spCz").text("材质");
+                    }
+                    if (ivalue == "spWl") {
+                        $("#spWl").text("纹理");
+                    }
+                    if (ivalue == "spSx") {
+                        $("#spSx").text("色系");
+                    }
+                    if (ivalue == "spDq")
+                    {
+                        $("#spDq").text("地区");
+                    }
+                }
+                var Cz = $("#spCz").text();
+                var Wl = $("#spWl").text();
+                var Sx = $("#spSx").text();
+                var Dq = $("#spDq").text();
+                $.ajax({
+                    type: 'POST',
+                    url: '/Show/Index',
+                    data: { strQuality: Cz, strGrain: Wl, strColor: Sx, strProvinceName: Dq },
+                    dataType: 'text',
+                    success: function (data) {
+                        if (data == null) {
+                            $('#searchPartialList').html("");
+                            $('#searchPartialList').html("<ul><li>未找到与您条件相符的产品！<li></ul>");
+                        }
+                        else {
+                            $('#searchPartialList').html("");
+                            $('#searchPartialList').html(data);
+                        }
+                    },
+                    error: function (XMLHttpRequest, textStatus, errorThrown) {
+                        alert(errorThrown);
+                    }
+                });
+
+            });
+        });
+
+    });
+
+</script>
+
+<div class="div-topimg">
+
+</div>
+<ul class="screen">
+    <li style="border-bottom: 1px solid rgb(210, 210, 210);">
+        <img class="Image01" src="~/Images/product01.png" />
+        <a class="screen01" href="javascript:;"><i></i><span class="span-top" id="spCz">材质</span><em></em></a>
+        <ul class="u1" style="display: none;">
+            <li><a>全部</a></li>
+            <li><a>大理石</a></li>
+            <li><a>花岗石</a></li>
+            <li><a>人造石</a></li>
+            <li><a>石灰石</a></li>
+            <li><a>其 他</a></li>
+        </ul>
+    </li>
+    <li style="border-bottom: 1px solid rgb(210, 210, 210);">
+        <img class="Image01" src="~/Images/product02.png" />
+        <a class="screen02" href="javascript:;"><i></i><span class="span-top" id="spWl">纹理</span><em></em></a>
+        <ul class="u1" style="display: none;">
+            <li><a>全部</a></li>
+            <li><a>无纹</a></li>
+            <li><a>乱纹</a></li>
+            <li><a>颗粒状</a></li>
+            <li><a>直纹</a></li>
+            <li><a>向纹</a></li>
+            <li><a>其他</a></li>
+        </ul>
+    </li>
+    <li style="border-bottom: 1px solid rgb(210, 210, 210);">
+        <img class="Image01" src="~/Images/product03.png" />
+        <a class="screen03" href="javascript:;"><i></i><span class="span-top" id="spSx">色系</span><em></em></a>
+        <ul class="u1" style="display: none;">
+            <li><a>全部</a></li>
+            <li><a>黄色</a></li>
+            <li><a>灰色</a></li>
+            <li><a>黑色</a></li>
+            <li><a>白色</a></li>
+            <li><a>啡色</a></li>
+            <li><a>红色</a></li>
+            <li><a>绿色</a></li>
+            <li><a>紫色</a></li>
+            <li><a>蓝色</a></li>
+            <li><a>其他</a></li>
+        </ul>
+    </li>
+    <li style="border-bottom: 1px solid rgb(210, 210, 210);">
+        <img class="Image01" src="~/Images/product04.png" />
+        <a class="screen04" href="javascript:;"><i></i><span class="span-top" id="spDq">地区</span><em></em></a>
+        <ul class="u1" style="display: none;">
+            <li><a href="javascript:sel(4,0);">全部</a></li>
+            <li><a>福建省</a></li>
+            <li><a>广东省</a></li>
+            <li><a>山东省</a></li>
+            <li><a>上海市</a></li>
+            <li><a>河北省</a></li>
+            <li><a>湖北省</a></li>
+            <li><a>广西壮族自治区</a></li>
+            <li><a>河南省</a></li>
+            <li><a>四川省</a></li>
+            <li><a>江西省</a></li>
+            <li><a>内蒙古自治区</a></li>
+            <li><a>新疆维吾尔自治区</a></li>
+            <li><a>江苏省</a></li>
+            <li><a>北京市</a></li>
+            <li><a>浙江省</a></li>
+            <li><a>天津市</a></li>
+            <li><a>湖南省</a></li>
+            <li><a>贵州省</a></li>
+            <li><a>云南省</a></li>
+            <li><a>山西省</a></li>
+            <li><a>重庆市</a></li>
+            <li><a>安徽省</a></li>
+            <li><a>甘肃省</a></li>
+            <li><a>辽宁省</a></li>
+            <li><a>陕西省</a></li>
+            <li><a>海南省</a></li>
+            <li><a>澳门特别行政区</a></li>
+            <li><a>黑龙江省</a></li>
+            <li><a>青海省</a></li>
+            <li><a>宁夏回族自治区</a></li>
+            <li><a>香港特别行政区</a></li>
+            <li><a>西藏自治区</a></li>
+            <li><a>台湾省</a></li>
+            <li><a>吉林省</a></li>
+        </ul>
+    </li>
+</ul>
+<div id="searchPartialList">
+
+</div>

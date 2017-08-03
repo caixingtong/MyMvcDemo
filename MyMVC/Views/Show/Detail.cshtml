@@ -1,0 +1,335 @@
+﻿
+@using MyMVC.Models;
+@{
+    ViewBag.Title = "现货详情";
+    Layout = null;
+    @Scripts.Render("~/bundles/jquery")
+}
+
+@model MyMVC.Models.Goods
+<style>
+    * {
+        font: bold 40px #000000;
+        margin: 0px;
+        padding: 0px;
+    }
+
+    .div-all {
+        width: 100%;
+        height: auto;
+    }
+
+    .top {
+        color: red;
+        text-align: center;
+        width: 100%;
+        font: bold 40px red;
+        font-family: "微软雅黑";
+        background-color: #F6F6F6;
+        height: 80px;
+        line-height: 80px;
+    }
+
+        .top img {
+            height: 50px;
+            width: 50px;
+            float: left;
+            margin-top: 15px;
+            margin-left: 15px;
+        }
+
+    .div-img {
+        width: 100%;
+        height: 600px;
+    }
+
+    .divchild-img {
+        margin-top: 50px;
+        width: 100%;
+        height: 500px;
+        border: solid 1px #000000;
+    }
+
+    .div-title {
+        width: 100%;
+        height: 80px;
+        line-height: 80px;
+        border-bottom: solid 1px #D2D2D2;
+    }
+
+        .div-title input {
+            margin-top: 25px;
+            margin-right: 15px;
+            width: 30px;
+            height: 30px;
+            color: red;
+            float: right;
+        }
+
+    .span1 {
+        color: black;
+        font-weight: bold;
+        font-size: 30px;
+        margin-left: 20px;
+    }
+
+    .span2 {
+        color: red;
+        font-size: 30px;
+        float: right;
+        margin-right: 20px;
+    }
+
+    .sp3 {
+        font-size: 30px;
+        color: #666666;
+        margin-left: 30px;
+        height: 70px;
+        line-height: 70px;
+    }
+
+    .div-contents {
+        width: 100%;
+        height: auto;
+        border-bottom: solid 1px #D2D2D2;
+    }
+
+    .sp4 {
+        color: #000000;
+        font-size: 30px;
+    }
+
+    .div-car {
+        position: fixed;
+        right: 20px;
+        width: 150px;
+        height: 150px;
+        z-index: 999;
+        background-image: url("../../Images/yds_bg.png");
+        border: 1px solid #808080;
+        border-radius: 150px;
+        margin-top: 1000px;
+        text-align: center;
+        background-position: 10px 20px;
+        border: 1px solid #808080;
+    }
+
+    .div-child-car {
+        float: right;
+        text-align: center;
+        margin-bottom: 0px;
+        height: 150px;
+        width: 150px;
+        font-size: 35px;
+        color: red;
+    }
+
+    .div-top {
+        position: fixed;
+        width: 100%;
+        height: auto;
+        background-color: #ffffff;
+        z-index: 99;
+    }
+
+    .div-top-1 {
+        width: 100%;
+        height: 10%;
+        text-align: center;
+        background-color: #F6F6F6;
+        line-height: 80px;
+        font-size: 40px;
+        color: #000000;
+    }
+
+    .div-top-1-1 {
+        float: right;
+        width: 8%;
+        height: 80%;
+        background-image: url("../../Images/booked_list_close.png");
+        background-size: cover;
+        margin-right: 50px;
+    }
+
+    .div-top-3 {
+        position: relative;
+        left: 0px;
+        top: 90%;
+        width: 100%;
+        height: 10%;
+    }
+
+    .aRe {
+        display: block;
+        float: left;
+        width: 48%;
+        height: 80px;
+        line-height: 80px;
+        text-align: center;
+        font-size: 30px;
+        background-color: #ffffff;
+        border: 1px solid #808080;
+        text-align: center;
+    }
+
+    .aSub {
+        display: block;
+        float: left;
+        width: 48%;
+        height: 80px;
+        line-height: 80px;
+        text-align: center;
+        font-size: 30px;
+        color: #ffffff;
+        background-color: #ff0000;
+        border: 1px solid #808080;
+    }
+</style>
+
+
+<script type="text/javascript">
+
+    function GetRequest() {
+        var url = location.search; //获取url中"?"符后的字串
+        var theRequest = new Object();
+        if (url.indexOf("?") != -1) {
+            var str = url.substr(1);
+            strs = str.split("&");
+            for (var i = 0; i < strs.length; i++) {
+                theRequest[strs[i].split("=")[0]] = unescape(strs[i].split("=")[1]);
+            }
+        }
+        return theRequest;
+    }
+
+    function GetId(obj) {
+        if (obj.checked) {
+            $("#div-Id").text(1);
+            var Request = new Object();
+            Request = GetRequest();
+            $.ajax({
+                type: 'POST',
+                url: '/Show/Index/?id=' + GetRequest().Id,
+                data: {},
+                dataType: 'text',
+                success: function (data) {
+                    $('#div-detail').html(data);
+                }, error: function (XMLHttpRequest, textStatus, errorThrown) {
+                    //  alert(errorThrown);
+                }
+            })
+
+        } else {
+            $("#div-Id").text(0);
+            $('#div-detail').html('');
+        }
+    }
+
+    $(function () {
+        $("#div-car").click(function () {
+            if (document.getElementById("div-carshow").style.display == "none") {
+                document.getElementById("div-carshow").style.display = "";
+            } else {
+                document.getElementById("div-carshow").style.display = "none";
+            }
+        });
+
+        $("#div-close").click(function () {
+            if (document.getElementById("div-carshow").style.display == "none") {
+                document.getElementById("div-carshow").style.display = "";
+            } else {
+                document.getElementById("div-carshow").style.display = "none";
+            }
+        });
+
+
+
+    })
+
+    function ReMove() {
+        $("#div-Id").text(0);
+        $('#div-detail').html('');
+        document.getElementById("div-carshow").style.display = "none";
+        document.getElementById("chk").checked = false;
+    }
+
+    function Sub() {
+        var Request = new Object();
+        Request = GetRequest();
+        if (GetRequest().Id == null) {
+            alert('请选择商品加入到购物车！');
+            return;
+        }
+        else {
+            $.ajax({
+                type: 'POST',
+                url: '/Show/SendOrder/?id=' + GetRequest().Id,
+                data: { Id: GetRequest().Id },
+                dataType: 'text',
+                success: function (data) {
+                    if (data == 1) {
+                        alert('下单成功！');
+                    } else {
+                        alert('下单失败！请先登入账号！');
+                        window.location.href = "/Login/Index";
+                    }
+                    ReMove();
+                }, error: function (XMLHttpRequest, textStatus, errorThrown) {
+                    //  alert('下单失败！');// alert(errorThrown);
+                }
+            })
+        }
+
+    }
+</script>
+
+<div id="div-carshow" class="div-top" style="display:none">
+    <div class="div-top-1">
+        预定清单   <div class="div-top-1-1" id="div-close"></div>
+    </div>
+    <div class="div-top-2" id="div-detail">
+
+    </div>
+    <div class="div-top-3">
+        <a class="aRe" onclick="ReMove();">重置</a> <a class="aSub" onclick="Sub()">提交</a>
+    </div>
+</div>
+
+<div id="div-car" class="div-car">
+    <div id="div-Id" class="div-child-car">0</div>
+</div>
+
+
+<div class="div-all">
+    <div class="top">
+        <img src="~/Images/ICO/spot02.png" onclick="javascript: window.history.back(-1)" /> <span style="margin-left:-40px;color:red"> 现货详情</span>
+    </div>
+    <div class="div-img">
+        <div class="divchild-img" style="background-size:cover; background-image:url(@Html.DisplayFor(model=>model.ImageUrl))">
+        </div>
+    </div>
+    <div class="div-title">
+        <span class="span1">产品详情</span>
+        <span class="span2">立即预定</span>
+        <input type="checkbox" id="chk" onclick="GetId(this);" />
+    </div>
+    <div class="div-contents">
+        <span class="sp3">品名：</span><span class="sp4">@Html.DisplayFor(model => model.Name)</span><br />
+        <span class="sp3">价格：</span><span class="sp4">@Html.DisplayFor(model => model.Price)</span><br />
+        <span class="sp3">库存：</span><span class="sp4">@Html.DisplayFor(model => model.Areas)</span><br />
+        <span class="sp3">原产地：</span><span class="sp4"></span><br />
+        <span class="sp3">所在地：</span><span class="sp4">@Html.DisplayFor(model => model.ProvinceName);@Html.DisplayFor(mode => mode.CityName)</span><br />
+    </div>
+
+    <div class="div-contents">
+        <span class="sp3">色系：</span><span class="sp4">@Html.DisplayFor(model => model.Color)</span><br />
+        <span class="sp3">材质：</span><span class="sp4">@Html.DisplayFor(model => model.Quality)</span><br />
+        <span class="sp3">纹理：</span><span class="sp4">@Html.DisplayFor(model => model.Grain)</span><br />
+        <span class="sp3">规格：</span><span class="sp4">@Html.DisplayFor(model => model.ProvinceName)-@Html.DisplayFor(mode => mode.CityName)</span><br />
+        <span class="sp3">联系人：</span><span class="sp4">@Html.DisplayFor(model => model.ChartMan)</span><br />
+        <span class="sp3">联系方式：</span><span class="sp4" style="color:red">@Html.DisplayFor(model => model.Tel)</span><br />
+    </div>
+</div>
+
+
+
